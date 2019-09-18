@@ -6,7 +6,11 @@ var Schema = mongoose.Schema;
 var SchoolSchema = new Schema({
     schoolname: {
         type: String,
+        unique: "School Name already exists",
         required: 'Please fill a School name',
+    },
+    imageUrl: {
+        type: String
     },
     under: {
         type: String,
