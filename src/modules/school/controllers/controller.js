@@ -36,6 +36,7 @@ exports.create = function (req, res) {
     newSchool.createby = req.user;
     newSchool.save(function (err, data) {
         if (err) {
+            
             return res.status(400).send({
                 status: 400,
                 message: errorHandler.getErrorMessage(err)

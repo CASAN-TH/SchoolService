@@ -17,6 +17,7 @@ describe('School CRUD routes tests', function () {
     before(function (done) {
         mockup = {
             schoolname: 'ไตรพัฒน์',
+            imageUrl: 'https://www.voicesofyouth.org/sites/default/files/images/2019-03/school.jpg',
             under: 'สำนักงานคณะกรรมการส่งเสริมการศึกษาเอกชน',
             area: 'ประถมศึกษาประทุมธานีเขต 2',
             subdistric: 'บึงคำพร้อย',
@@ -26,7 +27,7 @@ describe('School CRUD routes tests', function () {
             position: 'นายทะเบียน',
             direction: 'นางสาวนันทนา เกษมโกสินทร์',
             positions: 'ผู้อำนวยการ'
-            
+
         };
         credentials = {
             username: 'username',
@@ -42,18 +43,19 @@ describe('School CRUD routes tests', function () {
         done();
     });
 
-    it('should be School get use token', (done)=>{
+
+    it('should be School get use token', (done) => {
         request(app)
-        .get('/api/schools')
-        .set('Authorization', 'Bearer ' + token)
-        .expect(200)
-        .end((err, res)=>{
-            if (err) {
-                return done(err);
-            }
-            var resp = res.body;
-            done();
-        });
+            .get('/api/schools')
+            .set('Authorization', 'Bearer ' + token)
+            .expect(200)
+            .end((err, res) => {
+                if (err) {
+                    return done(err);
+                }
+                var resp = res.body;
+                done();
+            });
     });
 
     it('should be School get by id', function (done) {
@@ -79,6 +81,7 @@ describe('School CRUD routes tests', function () {
                         var resp = res.body;
                         assert.equal(resp.status, 200);
                         assert.equal(resp.data.schoolname, mockup.schoolname);
+                        assert.equal(resp.data.imageUrl, mockup.imageUrl);
                         assert.equal(resp.data.under, mockup.under);
                         assert.equal(resp.data.area, mockup.area);
                         assert.equal(resp.data.subdistric, mockup.subdistric);
@@ -94,7 +97,7 @@ describe('School CRUD routes tests', function () {
 
     });
 
-    it('should be School post use token', (done)=>{
+    it('should be School post use token', (done) => {
         request(app)
             .post('/api/schools')
             .set('Authorization', 'Bearer ' + token)
@@ -106,6 +109,7 @@ describe('School CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 assert.equal(resp.data.schoolname, mockup.schoolname);
+                assert.equal(resp.data.imageUrl, mockup.imageUrl);
                 assert.equal(resp.data.under, mockup.under);
                 assert.equal(resp.data.area, mockup.area);
                 assert.equal(resp.data.subdistric, mockup.subdistric);
@@ -133,6 +137,7 @@ describe('School CRUD routes tests', function () {
                 var resp = res.body;
                 var update = {
                     schoolname: 'ไตรพัฒน์2',
+                    imageUrl: 'https://static.toiimg.com/thumb/msid-69721750,imgsize-140514,width-400,resizemode-4/69721750.jpg',
                     under: 'สำนักงานคณะกรรมการส่งเสริมการศึกษาเอกชน2',
                     area: 'ประถมศึกษาประทุมธานีเขต 22',
                     subdistric: 'บึงคำพร้อย2',
@@ -154,6 +159,7 @@ describe('School CRUD routes tests', function () {
                         }
                         var resp = res.body;
                         assert.equal(resp.data.schoolname, update.schoolname);
+                        assert.equal(resp.data.imageUrl, update.imageUrl);
                         assert.equal(resp.data.under, update.under);
                         assert.equal(resp.data.area, update.area);
                         assert.equal(resp.data.subdistric, update.subdistric);
@@ -190,15 +196,15 @@ describe('School CRUD routes tests', function () {
 
     });
 
-    it('should be school get not use token', (done)=>{
+    it('should be school get not use token', (done) => {
         request(app)
-        .get('/api/schools')
-        .expect(403)
-        .expect({
-            status: 403,
-            message: 'User is not authorized'
-        })
-        .end(done);
+            .get('/api/schools')
+            .expect(403)
+            .expect({
+                status: 403,
+                message: 'User is not authorized'
+            })
+            .end(done);
     });
 
     it('should be school post not use token', function (done) {
@@ -265,6 +271,33 @@ describe('School CRUD routes tests', function () {
                     .end(done);
             });
 
+    });
+
+    it('should be school is duplicate schoolname', function (done) {
+        request(app)
+            .post('/api/schools')
+            .set('Authorization', 'Bearer ' + token)
+            .send(mockup)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+
+                var resp = res.body;
+
+                request(app)
+                    .post('/api/schools')
+                    .set('Authorization', 'Bearer ' + token)
+                    .send(mockup)
+                    .expect(400)
+                    .expect({
+                        status: 400,
+                        message:
+                            '11000 duplicate key error collection: database-test.schools index: schoolname already exists'
+                    })
+                    .end(done);
+            });
     });
 
     afterEach(function (done) {
