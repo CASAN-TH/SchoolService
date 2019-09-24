@@ -10,7 +10,8 @@ var request = require('supertest'),
 
 var credentials,
     token,
-    mockup;
+    mockup,
+    mockupimg;
 
 describe('School CRUD routes tests', function () {
 
@@ -27,6 +28,11 @@ describe('School CRUD routes tests', function () {
             position: 'นายทะเบียน',
             direction: 'นางสาวนันทนา เกษมโกสินทร์',
             positions: 'ผู้อำนวยการ'
+        };
+
+        mockupimg = {
+
+            imageUrl: 'https://www.voicesofyouth.org/sites/default/files/images/2019-03/school.jpg'
 
         };
         credentials = {
@@ -299,6 +305,32 @@ describe('School CRUD routes tests', function () {
                     .end(done);
             });
     });
+
+    // it('should be School upload photo', (done) => {
+    //     request(app)
+    //         .post('/api/upload')
+    //         .set('Authorization', 'Bearer ' + token)
+    //         .send(mockupimg)
+    //         .expect(200)
+    //         .end(function (err, res) {
+    //             if (err) {
+    //                 return done(err);
+    //             }
+    //             var resp = res.body;
+                // assert.equal(resp.data.schoolname, mockup.schoolname);
+                // assert.equal(resp.data.imageUrl, mockup.imageUrl);
+                // assert.equal(resp.data.under, mockup.under);
+                // assert.equal(resp.data.area, mockup.area);
+                // assert.equal(resp.data.subdistric, mockup.subdistric);
+                // assert.equal(resp.data.distric, mockup.distric);
+                // assert.equal(resp.data.province, mockup.province);
+                // assert.equal(resp.data.registrar, mockup.registrar);
+                // assert.equal(resp.data.position, mockup.position);
+                // assert.equal(resp.data.direction, mockup.direction);
+                // assert.equal(resp.data.positions, mockup.positions);
+    //             done();
+    //         });
+    // });
 
     afterEach(function (done) {
         School.remove().exec(done);

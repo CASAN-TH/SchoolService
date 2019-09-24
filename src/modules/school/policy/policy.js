@@ -23,7 +23,12 @@ exports.invokeRolesPolicies = function() {
         {
           resources: "/api/schools/:schoolId",
           permissions: "*"
+        },
+        {
+          resources: "/api/upload",
+          permissions: "*"
         }
+        
       ]
     }
   ]);
