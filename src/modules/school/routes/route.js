@@ -14,9 +14,12 @@ module.exports = function (app) {
         .put(controller.update)
         .delete(controller.delete);
 
+    app.route('/api/upload').all(policy.isAllowed)
+        .post(controller.photoupload);
+
     app.param('schoolId', controller.getByID);
 
-   
+
     /**
      * Message Queue
      * exchange : ชื่อเครือข่ายไปรษณีย์  เช่น casan
@@ -27,6 +30,6 @@ module.exports = function (app) {
 
     // mq.consume('exchange', 'qname', 'keymsg', (msg)=>{
     //     console.log(JSON.parse(msg.content));
-        
+
     // });
 }

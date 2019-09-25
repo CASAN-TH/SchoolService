@@ -16,27 +16,27 @@ exports.getList = function (req, res) {
     }
     query.skip = size * (pageNo - 1);
     query.limit = size;
-        School.find({}, {}, query, function (err, datas) {
-            if (err) {
-                return res.status(400).send({
-                    status: 400,
-                    message: errorHandler.getErrorMessage(err)
-                });
-            } else {
-                res.jsonp({
-                    status: 200,
-                    data: datas
-                });
-            };
-        });
+    School.find({}, {}, query, function (err, datas) {
+        if (err) {
+            return res.status(400).send({
+                status: 400,
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.jsonp({
+                status: 200,
+                data: datas
+            });
+        };
+    });
 };
 
 exports.create = function (req, res) {
-    var newSchool = new School (req.body);
+    var newSchool = new School(req.body);
     newSchool.createby = req.user;
     newSchool.save(function (err, data) {
         if (err) {
-            
+
             return res.status(400).send({
                 status: 400,
                 message: errorHandler.getErrorMessage(err)
@@ -48,7 +48,7 @@ exports.create = function (req, res) {
                 status: 200,
                 data: data
             });
-           
+
             /**
              * Message Queue
              */
@@ -117,3 +117,25 @@ exports.delete = function (req, res) {
         };
     });
 };
+
+exports.photoupload = function (req, res, err) {
+    console.log('23421421')
+    // if (err) {
+    //     res.render('index', {
+    //         msg: err
+    //     });
+    // } else {
+    //     if (req.file == undefined) {
+    //         res.render('index', {
+    //             msg: 'Error: No File Selected!'
+    //         });
+    //     } else {
+    //         res.render('index', {
+    //             msg: 'File Uploaded!',
+    //             file: `uploads/${req.file.filename}`
+    //         });
+    //     }
+    // }
+}
+
+
