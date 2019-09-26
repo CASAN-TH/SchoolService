@@ -14,7 +14,7 @@ module.exports = function (app) {
         .put(controller.update)
         .delete(controller.delete);
 
-    app.route('/api/upload').all(policy.isAllowed)
+    app.route('/api/schools/upload/logo')//.all(policy.isAllowed)
         .post(controller.photoupload);
 
     app.param('schoolId', controller.getByID);

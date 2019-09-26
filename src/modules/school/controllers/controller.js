@@ -6,6 +6,17 @@ var mongoose = require('mongoose'),
     errorHandler = require('../../core/controllers/errors.server.controller'),
     _ = require('lodash');
 
+var cloudinary = require("../../../config/cloudinary").cloudinary;
+
+const multer = require('multer')
+
+const storage = multer.diskStorage({
+  filename: function(req, file, cb) {
+    // console.log(file)
+    cb(null, file.originalname)
+  }
+})
+
 exports.getList = function (req, res) {
     var pageNo = parseInt(req.query.pageNo);
     var size = parseInt(req.query.size);
@@ -118,24 +129,25 @@ exports.delete = function (req, res) {
     });
 };
 
-exports.photoupload = function (req, res, err) {
-    console.log('23421421')
-    // if (err) {
-    //     res.render('index', {
-    //         msg: err
-    //     });
-    // } else {
-    //     if (req.file == undefined) {
-    //         res.render('index', {
-    //             msg: 'Error: No File Selected!'
-    //         });
-    //     } else {
-    //         res.render('index', {
-    //             msg: 'File Uploaded!',
-    //             file: `uploads/${req.file.filename}`
-    //         });
-    //     }
-    // }
+exports.photoupload = function (req, res) {
+    const upload = multer({ storage }).single('filename');
+    upload(req, res, function(err) {
+        if (err) {
+            return res.send(err)
+          }
+          const path = req.file.path
+        cloudinary.uploader.upload(
+        path,
+        (result)=>{
+            // console.log(result);
+            res.json({
+                status: 200,
+                data: result
+            });
+        });
+    })
+    
+    
 }
 
 

@@ -25,7 +25,7 @@ exports.invokeRolesPolicies = function() {
           permissions: "*"
         },
         {
-          resources: "/api/upload",
+          resources: "/api/schools/upload",
           permissions: "*"
         }
         

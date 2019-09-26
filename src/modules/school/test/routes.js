@@ -10,8 +10,8 @@ var request = require('supertest'),
 
 var credentials,
     token,
-    mockup,
-    mockupimg;
+    mockup;
+    // mockupimg;
 
 describe('School CRUD routes tests', function () {
 
@@ -30,11 +30,11 @@ describe('School CRUD routes tests', function () {
             positions: 'ผู้อำนวยการ'
         };
 
-        mockupimg = {
+        // mockupimg = {
 
-            imageUrl: 'https://www.voicesofyouth.org/sites/default/files/images/2019-03/school.jpg'
+        //     imageUrl: 'https://www.voicesofyouth.org/sites/default/files/images/2019-03/school.jpg'
 
-        };
+        // };
         credentials = {
             username: 'username',
             password: 'password',
@@ -317,17 +317,6 @@ describe('School CRUD routes tests', function () {
     //                 return done(err);
     //             }
     //             var resp = res.body;
-                // assert.equal(resp.data.schoolname, mockup.schoolname);
-                // assert.equal(resp.data.imageUrl, mockup.imageUrl);
-                // assert.equal(resp.data.under, mockup.under);
-                // assert.equal(resp.data.area, mockup.area);
-                // assert.equal(resp.data.subdistric, mockup.subdistric);
-                // assert.equal(resp.data.distric, mockup.distric);
-                // assert.equal(resp.data.province, mockup.province);
-                // assert.equal(resp.data.registrar, mockup.registrar);
-                // assert.equal(resp.data.position, mockup.position);
-                // assert.equal(resp.data.direction, mockup.direction);
-                // assert.equal(resp.data.positions, mockup.positions);
     //             done();
     //         });
     // });
