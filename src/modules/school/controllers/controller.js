@@ -140,7 +140,10 @@ exports.photoupload = function (req, res) {
         path,
         (result)=>{
             // console.log(result);
-            res.json(result);
+            res.json({
+                status: 200,
+                data: result
+            });
         });
     })
     
